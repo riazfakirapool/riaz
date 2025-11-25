@@ -111,10 +111,10 @@
             border-collapse: collapse;
             margin: 10px 0;
             border: 1px solid #d1d5db;
-            table-layout: fixed; /* Better for resizing */
+            table-layout: fixed;
         }
         #resultText td, #resultText th {
-            border: 1px solid #d1d5db; /* Light gray border */
+            border: 1px solid #d1d5db;
             padding: 8px;
             min-width: 50px;
             vertical-align: top;
@@ -251,12 +251,11 @@
             #resultText:empty:before {
                 content: "";
             }
-            /* Ensure table borders print correctly */
             #resultText table, #resultText td, #resultText th {
                 border: 1px solid black !important;
                 border-collapse: collapse !important;
             }
-            #translateBtn, #wordCountContainer, #listeningIndicator, #controlsToolbar, #tableToolbar, #calculatorModal, .bg-white.border-b {
+            #translateBtn, #wordCountContainer, #listeningIndicator, #controlsToolbar, #tableToolbar, #calculatorModal, .bg-white.border-b, .bg-indigo-600, .bg-yellow-50 {
                 display: none !important;
             }
         }
@@ -267,7 +266,7 @@
     <!-- Main Container -->
     <div class="w-full max-w-5xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col h-[90vh] transition-colors duration-300">
         
-        <!-- Header (Hidden when printing) -->
+        <!-- Header -->
         <div class="bg-indigo-600 p-4 text-white flex justify-between items-center shadow-md z-10">
             <div>
                 <h1 class="text-2xl font-bold flex items-center gap-2">
@@ -276,13 +275,11 @@
             </div>
             
             <div class="flex items-center gap-3">
-                <!-- Night Mode Toggle Button -->
+                <!-- Night Mode Toggle -->
                 <button id="themeToggleBtn" class="p-2 bg-indigo-500 hover:bg-indigo-400 rounded-full transition-colors focus:outline-none" title="নাইট মোড / ডে মোড">
-                    <!-- Sun Icon (Default Hidden) -->
                     <svg id="sunIcon" class="hidden w-5 h-5 text-yellow-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
-                    <!-- Moon Icon -->
                     <svg id="moonIcon" class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
@@ -301,13 +298,13 @@
             </div>
         </div>
 
-        <!-- Browser Support Warning -->
+        <!-- Browser Warning -->
         <div class="bg-yellow-50 border-b border-yellow-200 text-yellow-800 px-4 py-2 text-sm text-center flex items-center justify-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-600"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
             <span>সতর্কতা: এই টুলটি শুধুমাত্র <strong>Google Chrome</strong> ব্রাউজারে সঠিকভাবে কাজ করে।</span>
         </div>
 
-        <!-- Controls Toolbar (Start/Stop + Live Status) -->
+        <!-- Controls Toolbar -->
         <div id="controlsToolbar" class="bg-gray-50 border-b border-gray-200 p-3 flex items-center justify-between gap-4 relative transition-colors duration-300">
             <div class="flex items-center gap-3 shrink-0 z-10">
                 <button id="startBtn" title="শর্টকাট: Alt + S" class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-1.5 rounded-full font-semibold transition-all shadow-sm active:scale-95 text-sm">
@@ -320,18 +317,15 @@
                 </button>
             </div>
             
-            <!-- Enhanced Status Text (Centered) -->
             <div class="absolute left-0 right-0 text-center pointer-events-none">
                 <div class="text-sm font-medium text-gray-500 truncate transition-colors duration-200 px-4" id="statusText">মাইক্রোফোন বন্ধ (Start: Alt+S)</div>
             </div>
-            
-            <!-- Spacer -->
             <div class="hidden sm:block w-20"></div> 
         </div>
 
         <!-- Formatting Toolbar -->
         <div class="bg-white border-b border-gray-200 p-2 flex flex-wrap items-center gap-2 sticky top-0 z-10 shadow-sm transition-colors duration-300">
-            <!-- Formatting Group -->
+            <!-- Bold/Italic/Underline -->
             <div class="flex items-center bg-gray-100 rounded-lg p-1 gap-1">
                 <button onclick="formatDoc('bold')" class="p-2 hover:bg-gray-300 rounded text-gray-700" title="Bold">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
@@ -346,30 +340,24 @@
 
             <div class="w-px h-8 bg-gray-300 mx-1"></div>
 
-            <!-- Font Size Group -->
+            <!-- Font Size (Selection Aware) -->
             <div class="flex items-center bg-gray-100 rounded-lg p-1 gap-1">
-                <button onclick="changeFontSize(-2)" class="p-2 hover:bg-gray-300 rounded text-gray-700 font-bold text-sm w-10" title="ফন্ট ছোট করুন">
-                    A-
-                </button>
-                <button onclick="changeFontSize(2)" class="p-2 hover:bg-gray-300 rounded text-gray-700 font-bold text-lg w-10" title="ফন্ট বড় করুন">
-                    A+
-                </button>
+                <button onclick="changeFontSize(-2)" class="p-2 hover:bg-gray-300 rounded text-gray-700 font-bold text-sm w-10" title="ফন্ট ছোট করুন (সিলেক্ট করা অংশ)">A-</button>
+                <button onclick="changeFontSize(2)" class="p-2 hover:bg-gray-300 rounded text-gray-700 font-bold text-lg w-10" title="ফন্ট বড় করুন (সিলেক্ট করা অংশ)">A+</button>
             </div>
 
             <div class="w-px h-8 bg-gray-300 mx-1"></div>
 
-            <!-- Color Picker Group (Enhanced) -->
+            <!-- Color Picker -->
             <div class="flex items-center bg-gray-100 rounded-lg p-1 gap-1 relative">
                  <button id="colorMenuBtn" onclick="toggleColorMenu()" class="flex flex-col items-center justify-center w-9 h-9 hover:bg-gray-300 rounded cursor-pointer" title="লেখার রঙ পরিবর্তন করুন">
                     <span class="font-bold text-gray-700 text-lg leading-none mt-1">A</span>
                     <div id="colorIndicator" class="h-1 w-6 bg-black mt-0.5 rounded-full"></div>
                 </button>
                 
-                <!-- Color Dropdown Menu -->
                 <div id="colorDropdown" class="hidden absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 shadow-xl rounded-lg z-50 p-3">
                     <p class="text-xs text-gray-500 mb-2 font-medium">রঙ নির্বাচন করুন:</p>
                     <div class="grid grid-cols-5 gap-2 mb-3">
-                        <!-- Presets -->
                         <button onclick="applyPresetColor('#000000')" class="w-6 h-6 rounded-full border border-gray-300 hover:scale-110 transition-transform bg-black shadow-sm" title="কালো"></button>
                         <button onclick="applyPresetColor('#EF4444')" class="w-6 h-6 rounded-full border border-gray-300 hover:scale-110 transition-transform bg-red-500 shadow-sm" title="লাল"></button>
                         <button onclick="applyPresetColor('#3B82F6')" class="w-6 h-6 rounded-full border border-gray-300 hover:scale-110 transition-transform bg-blue-500 shadow-sm" title="নীল"></button>
@@ -381,7 +369,6 @@
                         <button onclick="applyPresetColor('#6B7280')" class="w-6 h-6 rounded-full border border-gray-300 hover:scale-110 transition-transform bg-gray-500 shadow-sm" title="ধূসর"></button>
                         <button onclick="applyPresetColor('#F97316')" class="w-6 h-6 rounded-full border border-gray-300 hover:scale-110 transition-transform bg-orange-500 shadow-sm" title="কমলা"></button>
                     </div>
-                    
                     <div class="border-t border-gray-200 pt-2">
                         <label class="flex items-center justify-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 p-1.5 rounded transition-colors w-full text-center border border-gray-300">
                             <span class="w-4 h-4 rounded-full bg-gradient-to-r from-red-500 via-green-500 to-blue-500"></span>
@@ -394,25 +381,19 @@
 
             <div class="w-px h-8 bg-gray-300 mx-1"></div>
 
-            <!-- Table Insert Button -->
+            <!-- Table & Calculator Buttons -->
             <div class="flex items-center bg-gray-100 rounded-lg p-1 gap-1">
                 <button onclick="insertTable()" class="p-2 hover:bg-gray-300 rounded text-gray-700" title="টেবিল যুক্ত করুন">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="12" y1="3" x2="12" y2="21"></line></svg>
                 </button>
-            </div>
-
-            <div class="w-px h-8 bg-gray-300 mx-1"></div>
-
-            <!-- Calculator Button -->
-            <div class="flex items-center bg-gray-100 rounded-lg p-1 gap-1">
-                <button onclick="toggleCalculator()" class="p-2 hover:bg-gray-300 rounded text-gray-700" title="ক্যালকুলেটর (Calculator)">
+                <button onclick="toggleCalculator()" class="p-2 hover:bg-gray-300 rounded text-gray-700" title="ক্যালকুলেটর">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="14"></line><line x1="12" y1="14" x2="12" y2="14"></line><line x1="8" y1="14" x2="8" y2="14"></line><line x1="16" y1="18" x2="16" y2="18"></line><line x1="12" y1="18" x2="12" y2="18"></line><line x1="8" y1="18" x2="8" y2="18"></line></svg>
                 </button>
             </div>
 
             <div class="w-px h-8 bg-gray-300 mx-1"></div>
 
-            <!-- History Group -->
+            <!-- Undo/Redo -->
             <div class="flex items-center bg-gray-100 rounded-lg p-1 gap-1">
                 <button onclick="formatDoc('undo')" class="p-2 hover:bg-gray-300 rounded text-gray-700" title="Undo">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
@@ -424,7 +405,7 @@
 
             <div class="w-px h-8 bg-gray-300 mx-1"></div>
 
-            <!-- Actions Group -->
+            <!-- Print/Share -->
             <div class="flex items-center bg-gray-100 rounded-lg p-1 gap-1">
                 <button onclick="printDoc()" class="p-2 hover:bg-gray-300 rounded text-gray-700" title="Print">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
@@ -442,13 +423,9 @@
             </div>
         </div>
 
-        <!-- Editor Area (Print Section) -->
+        <!-- Editor Area -->
         <div id="printSection" class="flex-grow p-6 relative bg-white overflow-hidden flex flex-col cursor-text transition-colors duration-300" onclick="document.getElementById('resultText').focus()">
-            
-            <!-- Rich Text Editable Div -->
             <div id="resultText" contenteditable="true" class="w-full h-full text-lg text-gray-800 outline-none leading-relaxed overflow-y-auto pb-24" placeholder="এখানে লেখা উঠবে..." spellcheck="false"></div>
-
-            <!-- Listening Indicator (Floating Bottom Right) - Kept small status -->
             <div id="listeningIndicator" class="hidden absolute bottom-6 right-6 flex items-center gap-1 bg-red-50 px-3 py-1 rounded-full border border-red-100 shadow-sm select-none z-10">
                 <div class="w-2 h-2 bg-red-500 rounded-full animate-bounce delay-200"></div>
                 <span class="text-xs text-red-600 font-medium ml-1">শুনছি...</span>
@@ -461,37 +438,23 @@
             অনুবাদ (Translate)
         </button>
 
-        <!-- NEW: Table Editing Toolbar (Floating) -->
+        <!-- Table Editing Toolbar -->
         <div id="tableToolbar" class="hidden fixed bg-white border border-gray-300 shadow-lg rounded-lg p-1 z-50 flex gap-1 items-center transition-all">
-            <button onclick="modifyTable('addRow')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs flex items-center gap-1" title="সারি যোগ করুন (Add Row)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>+Row
-            </button>
-            <button onclick="modifyTable('addCol')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs flex items-center gap-1" title="কলাম যোগ করুন (Add Col)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>+Col
-            </button>
+            <button onclick="modifyTable('addRow')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs flex items-center gap-1" title="সারি যোগ করুন">+Row</button>
+            <button onclick="modifyTable('addCol')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs flex items-center gap-1" title="কলাম যোগ করুন">+Col</button>
             <div class="w-px h-4 bg-gray-300 mx-1"></div>
-            
-            <!-- Resize Controls -->
-            <button onclick="modifyTable('decWidth')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs font-mono" title="প্রস্থ কমান (Decrease Width)">W-</button>
-            <button onclick="modifyTable('incWidth')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs font-mono" title="প্রস্থ বাড়ান (Increase Width)">W+</button>
-            <button onclick="modifyTable('decHeight')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs font-mono" title="উচ্চতা কমান (Decrease Height)">H-</button>
-            <button onclick="modifyTable('incHeight')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs font-mono" title="উচ্চতা বাড়ান (Increase Height)">H+</button>
-            
+            <button onclick="modifyTable('decWidth')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs font-mono" title="প্রস্থ কমান">W-</button>
+            <button onclick="modifyTable('incWidth')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs font-mono" title="প্রস্থ বাড়ান">W+</button>
+            <button onclick="modifyTable('decHeight')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs font-mono" title="উচ্চতা কমান">H-</button>
+            <button onclick="modifyTable('incHeight')" class="p-1.5 hover:bg-gray-100 rounded text-gray-600 text-xs font-mono" title="উচ্চতা বাড়ান">H+</button>
             <div class="w-px h-4 bg-gray-300 mx-1"></div>
-            
-            <button onclick="modifyTable('delRow')" class="p-1.5 hover:bg-red-50 text-red-600 rounded text-xs flex items-center gap-1" title="সারি মুছুন (Delete Row)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"></line></svg>-Row
-            </button>
-            <button onclick="modifyTable('delCol')" class="p-1.5 hover:bg-red-50 text-red-600 rounded text-xs flex items-center gap-1" title="কলাম মুছুন (Delete Col)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" y1="12" x2="19" y2="12"></line></svg>-Col
-            </button>
+            <button onclick="modifyTable('delRow')" class="p-1.5 hover:bg-red-50 text-red-600 rounded text-xs flex items-center gap-1" title="সারি মুছুন">-Row</button>
+            <button onclick="modifyTable('delCol')" class="p-1.5 hover:bg-red-50 text-red-600 rounded text-xs flex items-center gap-1" title="কলাম মুছুন">-Col</button>
             <div class="w-px h-4 bg-gray-300 mx-1"></div>
-            <button onclick="modifyTable('delTable')" class="p-1.5 hover:bg-red-100 text-red-700 rounded text-xs font-bold" title="টেবিল মুছুন (Delete Table)">
-                ✕
-            </button>
+            <button onclick="modifyTable('delTable')" class="p-1.5 hover:bg-red-100 text-red-700 rounded text-xs font-bold" title="টেবিল মুছুন">✕</button>
         </div>
 
-        <!-- NEW: Calculator Modal -->
+        <!-- Calculator Modal -->
         <div id="calculatorModal" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-2xl">
             <div class="calc-header" id="calcHeader">
                 <span class="text-xs font-bold uppercase tracking-wider opacity-70">Calculator</span>
@@ -508,24 +471,18 @@
                 <button class="calc-btn" onclick="calcAppend('/')">/</button>
                 <button class="calc-btn" onclick="calcAppend('*')">×</button>
                 <button class="calc-btn" onclick="calcBackspace()">⌫</button>
-                
                 <button class="calc-btn" onclick="calcAppend('7')">7</button>
                 <button class="calc-btn" onclick="calcAppend('8')">8</button>
                 <button class="calc-btn" onclick="calcAppend('9')">9</button>
                 <button class="calc-btn operator" onclick="calcAppend('-')">-</button>
-                
                 <button class="calc-btn" onclick="calcAppend('4')">4</button>
                 <button class="calc-btn" onclick="calcAppend('5')">5</button>
                 <button class="calc-btn" onclick="calcAppend('6')">6</button>
                 <button class="calc-btn operator" onclick="calcAppend('+')">+</button>
-                
                 <button class="calc-btn" onclick="calcAppend('1')">1</button>
                 <button class="calc-btn" onclick="calcAppend('2')">2</button>
                 <button class="calc-btn" onclick="calcAppend('3')">3</button>
-                
-                <!-- Equal Button Span -->
                 <button class="calc-btn equal" onclick="calcCalculate()" style="grid-row: span 2; display:flex; align-items:center; justify-content:center;">=</button>
-                
                 <button class="calc-btn" onclick="calcAppend('0')" style="grid-column: span 2; text-align: left; padding-left: 20px;">0</button>
                 <button class="calc-btn" onclick="calcAppend('.')">.</button>
             </div>
@@ -534,30 +491,24 @@
         <!-- Footer Actions -->
         <div class="bg-gray-50 p-4 border-t border-gray-200 flex flex-wrap justify-between items-center gap-3 transition-colors duration-300">
             <button id="clearBtn" class="bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-lg transition-colors text-sm font-medium flex items-center gap-2 border border-red-200">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
-                মুছে ফেলুন (Clear)
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg> মুছে ফেলুন
             </button>
-
             <div class="flex gap-2">
                 <button id="copyBtn" class="bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 px-4 py-2 rounded-lg transition-all shadow-sm active:scale-95 text-sm font-medium flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    কপি (Copy)
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> কপি
                 </button>
                 <button id="downloadBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-all shadow-sm active:scale-95 text-sm font-medium flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    সেভ (Save)
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> সেভ
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none z-50">
-        মেসেজ এখানে দেখাবে
-    </div>
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none z-50">মেসেজ</div>
 
     <script>
-        // DOM Elements
+        // --- DOM Elements ---
         const startBtn = document.getElementById('startBtn');
         const stopBtn = document.getElementById('stopBtn');
         const resultText = document.getElementById('resultText');
@@ -569,443 +520,196 @@
         const languageSelect = document.getElementById('languageSelect');
         const toast = document.getElementById('toast');
         const translateBtn = document.getElementById('translateBtn');
-        const tableToolbar = document.getElementById('tableToolbar'); // Table toolbar
+        const tableToolbar = document.getElementById('tableToolbar');
         const wordCountSpan = document.getElementById('wordCount');
-        
-        // --- CALCULATOR LOGIC ---
         const calculatorModal = document.getElementById('calculatorModal');
         const calcDisplay = document.getElementById('calcDisplay');
-        let calcValue = '0';
-
-        function toggleCalculator() {
-            if (calculatorModal.classList.contains('hidden')) {
-                calculatorModal.classList.remove('hidden');
-                // Center it if not moved manually (basic reset)
-                calculatorModal.style.top = '50%';
-                calculatorModal.style.left = '50%';
-            } else {
-                calculatorModal.classList.add('hidden');
-            }
-        }
-
-        function calcAppend(val) {
-            if (calcValue === '0' && !isNaN(val)) {
-                calcValue = val;
-            } else if (calcValue === 'Error') {
-                calcValue = val;
-            } else {
-                calcValue += val;
-            }
-            updateCalcDisplay();
-        }
-
-        function calcClear() {
-            calcValue = '0';
-            updateCalcDisplay();
-        }
-
-        function calcBackspace() {
-            if (calcValue.length > 1 && calcValue !== 'Error') {
-                calcValue = calcValue.slice(0, -1);
-            } else {
-                calcValue = '0';
-            }
-            updateCalcDisplay();
-        }
-
-        function calcCalculate() {
-            try {
-                // Safe evaluation
-                // Replace x with * just in case visual differed
-                let expression = calcValue.replace('×', '*');
-                // Prevent eval injection by allowing only math chars
-                if (/[^0-9+\-*/.]/.test(expression)) {
-                    throw new Error("Invalid input");
-                }
-                let result = new Function('return ' + expression)();
-                // Format to avoid long decimals
-                if (!Number.isInteger(result)) {
-                    result = result.toFixed(2).replace(/\.00$/, '');
-                }
-                calcValue = result.toString();
-            } catch (e) {
-                calcValue = 'Error';
-            }
-            updateCalcDisplay();
-        }
-
-        function updateCalcDisplay() {
-            calcDisplay.innerText = calcValue;
-        }
-
-        function insertCalcResult() {
-            if (calcValue !== 'Error') {
-                // Restore selection to editor
-                resultText.focus();
-                document.execCommand('insertText', false, calcValue);
-                // Optional: Close calculator after insert? Let's keep it open.
-                // toggleCalculator(); 
-            }
-        }
-
-        // Make Calculator Draggable
         const calcHeader = document.getElementById('calcHeader');
-        let isDragging = false;
-        let currentX;
-        let currentY;
-        let initialX;
-        let initialY;
-        let xOffset = 0;
-        let yOffset = 0;
-
-        calcHeader.addEventListener("mousedown", dragStart);
-        document.addEventListener("mouseup", dragEnd);
-        document.addEventListener("mousemove", drag);
-
-        function dragStart(e) {
-            initialX = e.clientX - xOffset;
-            initialY = e.clientY - yOffset;
-            if (e.target === calcHeader || e.target.parentNode === calcHeader) {
-                isDragging = true;
-            }
-        }
-
-        function dragEnd(e) {
-            initialX = currentX;
-            initialY = currentY;
-            isDragging = false;
-        }
-
-        function drag(e) {
-            if (isDragging) {
-                e.preventDefault();
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
-                xOffset = currentX;
-                yOffset = currentY;
-                // Use translate for smoother drag
-                setTranslate(currentX, currentY, calculatorModal);
-            }
-        }
-
-        function setTranslate(xPos, yPos, el) {
-            // Reset fixed centering to allow free movement
-            el.style.transform = `translate(calc(-50% + ${xPos}px), calc(-50% + ${yPos}px))`;
-        }
-
-        // --- COLOR PICKER LOGIC ---
         const colorDropdown = document.getElementById('colorDropdown');
         const colorIndicator = document.getElementById('colorIndicator');
-        let savedSelectionRange = null; // To store selection before opening dropdown
-
-        function toggleColorMenu() {
-            // If opening, save selection
-            if (colorDropdown.classList.contains('hidden')) {
-                saveSelection();
-                colorDropdown.classList.remove('hidden');
-            } else {
-                colorDropdown.classList.add('hidden');
-                restoreSelection(); // Optional: return focus
-            }
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!document.getElementById('colorMenuBtn').contains(e.target) && 
-                !colorDropdown.contains(e.target)) {
-                colorDropdown.classList.add('hidden');
-            }
-        });
-
-        function saveSelection() {
-            const sel = window.getSelection();
-            if (sel.rangeCount > 0 && resultText.contains(sel.anchorNode)) {
-                savedSelectionRange = sel.getRangeAt(0);
-            }
-        }
-
-        function restoreSelection() {
-            resultText.focus();
-            if (savedSelectionRange) {
-                const sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(savedSelectionRange);
-            }
-        }
-
-        function applyPresetColor(color) {
-            restoreSelection();
-            formatDoc('foreColor', color);
-            colorIndicator.style.backgroundColor = color;
-            colorDropdown.classList.add('hidden');
-        }
-
-        function applyCustomColor(color) {
-            restoreSelection();
-            formatDoc('foreColor', color);
-            colorIndicator.style.backgroundColor = color;
-            colorDropdown.classList.add('hidden');
-        }
-
-        // Dark Mode Logic
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const sunIcon = document.getElementById('sunIcon');
         const moonIcon = document.getElementById('moonIcon');
         const body = document.body;
 
-        // Load saved theme
-        if (localStorage.getItem('theme') === 'dark') {
-            enableDarkMode();
-        }
+        // --- GLOBALS ---
+        let recognition;
+        let isRecording = false;
+        let shouldContinue = false;
+        let savedSelectionRange = null;
+        let currentTableCell = null;
+        let calcValue = '0';
+        let currentFontSize = 18;
 
-        themeToggleBtn.addEventListener('click', () => {
-            if (body.classList.contains('dark-mode')) {
-                disableDarkMode();
-            } else {
-                enableDarkMode();
-            }
+        // --- INITIALIZATION ---
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark') enableDarkMode();
+            updateWordCount();
         });
 
-        function enableDarkMode() {
-            body.classList.add('dark-mode');
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
-            localStorage.setItem('theme', 'dark');
-        }
+        // --- SPEECH RECOGNITION ---
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
 
-        function disableDarkMode() {
-            body.classList.remove('dark-mode');
-            moonIcon.classList.remove('hidden');
-            sunIcon.classList.add('hidden');
-            localStorage.setItem('theme', 'light');
-        }
+            recognition.onstart = () => {
+                isRecording = true;
+                startBtn.classList.add('hidden');
+                stopBtn.classList.remove('hidden');
+                statusText.innerText = "শুনছি... (Stop: Alt+X)";
+                statusText.className = "text-sm font-bold text-green-600 animate-pulse px-4";
+                stopBtn.classList.add('mic-active');
+                listeningIndicator.classList.remove('hidden');
+                resultText.focus();
+            };
 
-        // --- TABLE INSERTION LOGIC (FIXED) ---
-        function insertTable() {
-            // Save current selection/range
-            const selection = window.getSelection();
-            let range = null;
-            
-            if (selection.rangeCount > 0) {
-                const r = selection.getRangeAt(0);
-                // Ensure the selection is inside the editor
-                if (resultText.contains(r.commonAncestorContainer)) {
-                    range = r;
-                }
-            }
-
-            const rows = prompt("কতটি সারি (Rows) দরকার?", "2");
-            if (rows === null) return; // Cancelled
-            const cols = prompt("কতটি কলাম (Columns) দরকার?", "2");
-            if (cols === null) return; // Cancelled
-            
-            let r = parseInt(rows);
-            let c = parseInt(cols);
-            
-            // Default if invalid
-            if (isNaN(r) || r < 1) r = 2;
-            if (isNaN(c) || c < 1) c = 2;
-            
-            // Refocus editor
-            resultText.focus();
-            
-            // Restore selection if valid, otherwise append to end
-            if (range) {
-                selection.removeAllRanges();
-                selection.addRange(range);
-            }
-            
-            let tableHTML = '<table style="width:100%; border-collapse: collapse; margin: 10px 0; border: 1px solid #d1d5db;"><tbody>';
-            
-            for (let i = 0; i < r; i++) {
-                tableHTML += '<tr>';
-                for (let j = 0; j < c; j++) {
-                    tableHTML += '<td style="border: 1px solid #d1d5db; padding: 8px; min-width: 50px;">&nbsp;</td>';
-                }
-                tableHTML += '</tr>';
-            }
-            
-            tableHTML += '</tbody></table><p><br></p>'; // Add break after table
-            
-            document.execCommand('insertHTML', false, tableHTML);
-        }
-
-        // --- TABLE EDITING LOGIC (Toolbar) ---
-        let currentTableCell = null; // Track selected cell
-
-        // Detect click inside table to show toolbar
-        resultText.addEventListener('click', (e) => {
-            const cell = e.target.closest('td, th');
-            if (cell && resultText.contains(cell)) {
-                currentTableCell = cell;
-                showTableToolbar(cell);
-            } else {
-                tableToolbar.classList.add('hidden');
-                currentTableCell = null;
-            }
-        });
-        
-        // Also hide toolbar on keyup if we move out of table
-        resultText.addEventListener('keyup', () => {
-            const selection = window.getSelection();
-            if (selection.rangeCount > 0) {
-                const node = selection.anchorNode;
-                const element = node.nodeType === 3 ? node.parentElement : node;
-                const cell = element.closest('td, th');
-                
-                if (cell && resultText.contains(cell)) {
-                    currentTableCell = cell;
-                    showTableToolbar(cell);
-                } else {
-                    tableToolbar.classList.add('hidden');
-                    currentTableCell = null;
-                }
-            }
-        });
-
-        function showTableToolbar(cell) {
-            const rect = cell.getBoundingClientRect();
-            // Position toolbar above the cell or table
-            tableToolbar.classList.remove('hidden');
-            
-            // Simple positioning logic
-            const top = rect.top + window.scrollY - 45; 
-            const left = rect.left + window.scrollX;
-            
-            tableToolbar.style.top = `${top}px`;
-            tableToolbar.style.left = `${Math.max(10, left)}px`; // Keep some margin
-        }
-
-        function modifyTable(action) {
-            if (!currentTableCell) return;
-            
-            const cell = currentTableCell;
-            const row = cell.parentElement;
-            const table = row.parentElement.parentElement; // tbody -> table
-            const tbody = table.querySelector('tbody') || table;
-            const rowIndex = row.rowIndex;
-            const colIndex = cell.cellIndex;
-
-            if (action === 'addRow') {
-                const newRow = row.cloneNode(true);
-                // Clear content in new row
-                Array.from(newRow.cells).forEach(c => c.innerHTML = '&nbsp;');
-                // Insert after current row
-                if (rowIndex < table.rows.length - 1) {
-                    tbody.insertBefore(newRow, table.rows[rowIndex + 1]);
-                } else {
-                    tbody.appendChild(newRow);
-                }
-            } else if (action === 'addCol') {
-                for (let i = 0; i < table.rows.length; i++) {
-                    const newCell = table.rows[i].insertCell(colIndex + 1);
-                    newCell.innerHTML = '&nbsp;';
-                    newCell.style.border = '1px solid #d1d5db';
-                    newCell.style.padding = '8px';
-                    newCell.style.minWidth = '50px';
-                }
-            } else if (action === 'delRow') {
-                if (table.rows.length > 1) {
-                    table.deleteRow(rowIndex);
-                    tableToolbar.classList.add('hidden'); // Hide toolbar after delete
-                } else {
-                    showToast("শেষ সারিটি মুছা যাবে না (টেবিল মুছুন)");
-                }
-            } else if (action === 'delCol') {
-                if (row.cells.length > 1) {
-                    for (let i = 0; i < table.rows.length; i++) {
-                        table.rows[i].deleteCell(colIndex);
+            recognition.onend = () => {
+                if (shouldContinue) {
+                    try {
+                        recognition.start();
+                    } catch (e) {
+                        shouldContinue = false;
+                        updateUIStopped();
                     }
-                    tableToolbar.classList.add('hidden');
                 } else {
-                    showToast("শেষ কলামটি মুছা যাবে না");
+                    updateUIStopped();
                 }
-            } else if (action === 'delTable') {
-                if(confirm("পুরো টেবিলটি মুছে ফেলতে চান?")) {
-                    table.remove();
-                    tableToolbar.classList.add('hidden');
+            };
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                let finalTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript;
+                    else interimTranscript += event.results[i][0].transcript;
                 }
-            } else if (action === 'incWidth') {
-                let w = cell.offsetWidth;
-                cell.style.width = (w + 20) + 'px';
-                cell.style.minWidth = (w + 20) + 'px'; // Ensure it holds
-            } else if (action === 'decWidth') {
-                let w = cell.offsetWidth;
-                if (w > 40) { // Minimum width check
-                    cell.style.width = (w - 20) + 'px';
-                    cell.style.minWidth = (w - 20) + 'px';
+                if (finalTranscript) {
+                    insertTextAtCursor(finalTranscript);
+                    statusText.innerText = "শুনছি... (Stop: Alt+X)";
+                    statusText.classList.remove('text-indigo-600', 'font-bold');
+                    updateWordCount();
+                } else if (interimTranscript) {
+                    statusText.innerText = interimTranscript;
+                    statusText.classList.add('text-indigo-600', 'font-bold');
                 }
-            } else if (action === 'incHeight') {
-                let h = row.offsetHeight;
-                row.style.height = (h + 20) + 'px';
-            } else if (action === 'decHeight') {
-                let h = row.offsetHeight;
-                if (h > 30) { // Minimum height
-                    row.style.height = (h - 20) + 'px';
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Error:", event.error);
+                if (event.error === 'not-allowed') {
+                    showToast("মাইক অনুমতি নেই!");
+                    shouldContinue = false;
+                    stopRecording();
                 }
-            }
-            
-            // Refocus editor so editing can continue
+            };
+        } else {
+            alert('ব্রাউজার সাপোর্ট করছে না। Chrome ব্যবহার করুন।');
+            startBtn.disabled = true;
+        }
+
+        function startRecording() {
+            if (!recognition) return;
+            shouldContinue = true;
+            recognition.lang = languageSelect.value;
+            try { recognition.start(); } catch(e) {}
+        }
+
+        function stopRecording() {
+            if (!recognition) return;
+            shouldContinue = false;
+            recognition.stop();
+        }
+
+        function updateUIStopped() {
+            isRecording = false;
+            startBtn.classList.remove('hidden');
+            stopBtn.classList.add('hidden');
+            statusText.innerText = "মাইক্রোফোন বন্ধ (Start: Alt+S)";
+            statusText.className = "text-sm font-medium text-gray-500 px-4";
+            stopBtn.classList.remove('mic-active');
+            listeningIndicator.classList.add('hidden');
+        }
+
+        // --- HELPER FUNCTIONS ---
+        function formatDoc(cmd, value = null) {
+            if (value) document.execCommand(cmd, false, value);
+            else document.execCommand(cmd);
             resultText.focus();
         }
 
+        function insertTextAtCursor(text) {
+            resultText.focus();
+            // Basic logic to ensure text isn't merged awkwardly
+            const sel = window.getSelection();
+            if (sel.rangeCount > 0) {
+                // Smart spacing could go here
+            }
+            document.execCommand('insertText', false, text.startsWith(' ') ? text : ' ' + text);
+            updateWordCount();
+        }
 
-        // --- WORD COUNT LOGIC ---
+        // --- FONT SIZE WITH SELECTION SUPPORT ---
+        function changeFontSize(delta) {
+            const selection = window.getSelection();
+            const isTextSelected = selection.rangeCount > 0 && !selection.isCollapsed && resultText.contains(selection.anchorNode);
+
+            if (isTextSelected) {
+                // Handle selection specific resizing (Using HTML Font Size 1-7 scale for compatibility)
+                // Get current font size level of selection (default is 3)
+                let currentVal = document.queryCommandValue('fontSize');
+                let sizeIndex = 3; 
+                
+                // Map if browser returns pixels
+                if (currentVal && currentVal.indexOf('px') > -1) {
+                    const px = parseInt(currentVal);
+                    if (px <= 10) sizeIndex = 1;
+                    else if (px <= 13) sizeIndex = 2;
+                    else if (px <= 16) sizeIndex = 3;
+                    else if (px <= 18) sizeIndex = 4;
+                    else if (px <= 24) sizeIndex = 5;
+                    else if (px <= 32) sizeIndex = 6;
+                    else sizeIndex = 7;
+                } else {
+                    sizeIndex = parseInt(currentVal) || 3;
+                }
+
+                if (delta > 0) sizeIndex++;
+                else sizeIndex--;
+
+                if (sizeIndex < 1) sizeIndex = 1;
+                if (sizeIndex > 7) sizeIndex = 7;
+
+                document.execCommand('fontSize', false, sizeIndex);
+                showToast(`ফন্ট সাইজ লেভেল: ${sizeIndex}`);
+            } else {
+                // Global Zoom (Existing Logic) if nothing selected
+                currentFontSize += delta;
+                if (currentFontSize < 10) currentFontSize = 10;
+                if (currentFontSize > 60) currentFontSize = 60;
+                resultText.style.fontSize = currentFontSize + 'px';
+                showToast(`গ্লোবাল ফন্ট সাইজ: ${currentFontSize}px`);
+            }
+        }
+
         function updateWordCount() {
             const text = resultText.innerText.trim();
-            if (text.length === 0) {
-                wordCountSpan.innerText = "0";
-                return;
-            }
-            // Split by whitespace and filter out empty strings
-            const count = text.split(/\s+/).filter(word => word.length > 0).length;
-            wordCountSpan.innerText = count;
+            wordCountSpan.innerText = text ? text.split(/\s+/).filter(w => w).length : "0";
         }
 
-        // Trigger word count on input (typing) and paste
-        resultText.addEventListener('input', updateWordCount);
-
-        // --- PASTE AS PLAIN TEXT LOGIC (NotePad Style) ---
-        // This removes all formatting when pasting text
-        resultText.addEventListener('paste', (e) => {
-            e.preventDefault();
-            // Get plain text from clipboard
-            const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-            // Insert text using execCommand to preserve Undo history
-            document.execCommand('insertText', false, text);
-            // Update word count after paste
-            setTimeout(updateWordCount, 0); 
-        });
-
-        // Text Formatting Functions
-        function formatDoc(cmd, value = null) {
-            if (value) {
-                document.execCommand(cmd, false, value);
-            } else {
-                document.execCommand(cmd);
-            }
-            resultText.focus();
-        }
-
-        // Font Size Logic
-        let currentFontSize = 18; // Default font size in px
-        
-        function changeFontSize(delta) {
-            currentFontSize += delta;
-            // Prevent font from becoming too small or too huge
-            if (currentFontSize < 10) currentFontSize = 10;
-            if (currentFontSize > 60) currentFontSize = 60;
-            
-            resultText.style.fontSize = currentFontSize + 'px';
-            showToast(`ফন্ট সাইজ: ${currentFontSize}`);
-        }
-
+        // --- PRINT & SHARE FUNCTIONS ---
         function printDoc() {
             window.print();
         }
 
         async function shareDoc() {
             const text = resultText.innerText;
+            if (!text.trim()) {
+                showToast("শেয়ার করার জন্য কোনো লেখা নেই");
+                return;
+            }
+            
             if (navigator.share) {
                 try {
                     await navigator.share({
@@ -1017,289 +721,178 @@
                     console.log('Error sharing:', err);
                 }
             } else {
-                // Fallback
-                copyToClipboard();
-                showToast("লিঙ্ক কপি করা হয়েছে (শেয়ার সাপোর্ট করছে না)");
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("টেক্সট কপি করা হয়েছে (ব্রাউজার শেয়ার সাপোর্ট করছে না)");
+                }).catch(() => {
+                    showToast("শেয়ার করতে সমস্যা হয়েছে");
+                });
             }
         }
 
-        function copyToClipboard() {
-            if (!resultText.innerText.trim()) {
-                showToast("কপি করার জন্য কোনো লেখা নেই");
-                return;
-            }
-            
-            // For ContentEditable div copying
-            const range = document.createRange();
-            range.selectNodeContents(resultText);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            
-            try {
-                document.execCommand('copy');
-                showToast("লেখা কপি করা হয়েছে!");
-            } catch (err) {
-                showToast("কপি করতে সমস্যা হয়েছে");
-            }
-            selection.removeAllRanges();
-        }
-
-        // --- TRANSLATE BUTTON LOGIC ---
-        function handleSelection() {
-            const selection = window.getSelection();
-            
-            // Check if text is selected and it is not empty
-            if (selection.rangeCount > 0 && !selection.isCollapsed) {
-                const range = selection.getRangeAt(0);
-                const rect = range.getBoundingClientRect();
-                const selectedText = selection.toString().trim();
-                
-                if (selectedText.length === 0) {
-                    translateBtn.classList.add('hidden');
-                    return;
+        // --- COLOR PICKER ---
+        function toggleColorMenu() {
+            if (colorDropdown.classList.contains('hidden')) {
+                const sel = window.getSelection();
+                if (sel.rangeCount > 0 && resultText.contains(sel.anchorNode)) {
+                    savedSelectionRange = sel.getRangeAt(0);
                 }
-
-                // Ensure selection is inside the editor
-                if (!resultText.contains(selection.anchorNode) && !resultText.contains(selection.focusNode)) {
-                     translateBtn.classList.add('hidden');
-                     return;
-                }
-
-                // Show button above selection
-                translateBtn.classList.remove('hidden');
-                
-                // Calculate position relative to viewport
-                const top = rect.top + window.scrollY - 10; // 10px spacing
-                const left = rect.left + window.scrollX + (rect.width / 2);
-                
-                translateBtn.style.top = `${top}px`;
-                translateBtn.style.left = `${left}px`;
-                
-                // Attach click event for translation
-                translateBtn.onclick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // Open Google Translate in new tab
-                    const url = `https://translate.google.com/?sl=auto&tl=en&text=${encodeURIComponent(selectedText)}`;
-                    window.open(url, '_blank');
-                    
-                    // Hide button after click
-                    translateBtn.classList.add('hidden');
-                };
-
+                colorDropdown.classList.remove('hidden');
             } else {
-                translateBtn.classList.add('hidden');
+                colorDropdown.classList.add('hidden');
+                if (savedSelectionRange) {
+                    const sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(savedSelectionRange);
+                }
             }
         }
 
-        // Listen for selection changes
-        document.addEventListener('mouseup', handleSelection);
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'Shift' || e.key.startsWith('Arrow')) {
-                handleSelection();
+        function applyPresetColor(color) {
+            if (savedSelectionRange) {
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(savedSelectionRange);
             }
-        });
+            formatDoc('foreColor', color);
+            colorIndicator.style.backgroundColor = color;
+            colorDropdown.classList.add('hidden');
+        }
         
-        // Hide button when starting to select again
-        document.addEventListener('mousedown', (e) => {
-            if (e.target !== translateBtn) {
-                translateBtn.classList.add('hidden');
+        function applyCustomColor(color) {
+            applyPresetColor(color);
+        }
+
+        // --- TABLE ---
+        function insertTable() {
+            resultText.focus();
+            const r = parseInt(prompt("Rows?", "2")) || 2;
+            const c = parseInt(prompt("Cols?", "2")) || 2;
+            let html = '<table style="width:100%; border-collapse: collapse; margin: 10px 0; border: 1px solid #d1d5db;"><tbody>';
+            for (let i = 0; i < r; i++) {
+                html += '<tr>';
+                for (let j = 0; j < c; j++) html += '<td style="border: 1px solid #d1d5db; padding: 8px;">&nbsp;</td>';
+                html += '</tr>';
             }
-        });
-        // --- END TRANSLATE LOGIC ---
+            html += '</tbody></table><p><br></p>';
+            document.execCommand('insertHTML', false, html);
+        }
 
-
-        // Speech Recognition Setup
-        let recognition;
-        let isRecording = false;
-
-        // Restart recording on language change
-        languageSelect.addEventListener('change', () => {
-            // Auto-switch direction for Arabic (RTL)
-            if (languageSelect.value.startsWith('ar')) {
-                resultText.style.direction = 'rtl';
-                resultText.style.textAlign = 'right';
+        // Table Toolbar logic
+        resultText.addEventListener('click', (e) => {
+            const cell = e.target.closest('td, th');
+            if (cell && resultText.contains(cell)) {
+                currentTableCell = cell;
+                const rect = cell.getBoundingClientRect();
+                tableToolbar.classList.remove('hidden');
+                tableToolbar.style.top = `${rect.top + window.scrollY - 45}px`;
+                tableToolbar.style.left = `${Math.max(10, rect.left + window.scrollX)}px`;
             } else {
-                resultText.style.direction = 'ltr';
-                resultText.style.textAlign = 'left';
-            }
-
-            if (isRecording) {
-                stopRecording();
-                setTimeout(startRecording, 500);
+                tableToolbar.classList.add('hidden');
+                currentTableCell = null;
             }
         });
 
-        // Initialize Speech Recognition
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            recognition.continuous = true;
-            recognition.interimResults = true;
-        } else {
-            alert('দুঃখিত, আপনার ব্রাউজার স্পিচ টু টেক্সট সাপোর্ট করে না। ক্রোম ব্রাউজার ব্যবহার করুন।');
-            startBtn.disabled = true;
-        }
-
-        function startRecording() {
-            if (!recognition) return;
-            recognition.lang = languageSelect.value;
-            recognition.start();
-        }
-
-        function stopRecording() {
-            if (!recognition) return;
-            recognition.stop();
-        }
-
-        // --- KEYBOARD SHORTCUTS ---
-        document.addEventListener('keydown', (e) => {
-            // Start: Alt + S
-            if (e.altKey && (e.key === 's' || e.key === 'S')) {
-                e.preventDefault();
-                if (!isRecording) {
-                    startRecording();
-                    showToast("ভয়েস টাইপিং চালু হয়েছে");
+        function modifyTable(action) {
+            if (!currentTableCell) return;
+            const cell = currentTableCell;
+            const row = cell.parentElement;
+            const table = row.parentElement.parentElement;
+            if(action === 'addRow') {
+                const newRow = row.cloneNode(true);
+                Array.from(newRow.cells).forEach(c => c.innerHTML = '&nbsp;');
+                row.parentNode.insertBefore(newRow, row.nextSibling);
+            } else if(action === 'delRow') {
+                if(table.rows.length > 1) table.deleteRow(row.rowIndex);
+                else showToast("শেষ সারি মুছা যাবে না");
+            } else if(action === 'addCol') {
+                for(let i=0; i<table.rows.length; i++) {
+                    const newCell = table.rows[i].insertCell(cell.cellIndex + 1);
+                    newCell.innerHTML = '&nbsp;';
+                    newCell.style.border = '1px solid #d1d5db';
+                    newCell.style.padding = '8px';
                 }
-            }
-            // Stop: Alt + X
-            if (e.altKey && (e.key === 'x' || e.key === 'X')) {
-                e.preventDefault();
-                if (isRecording) {
-                    stopRecording();
-                    showToast("ভয়েস টাইপিং বন্ধ হয়েছে");
-                }
-            }
-        });
+            } else if(action === 'delCol') {
+                if(row.cells.length > 1) {
+                    const idx = cell.cellIndex;
+                    for(let i=0; i<table.rows.length; i++) table.rows[i].deleteCell(idx);
+                } else showToast("শেষ কলাম মুছা যাবে না");
+            } else if(action === 'delTable') {
+                if(confirm("পুরো টেবিল মুছবেন?")) table.remove();
+                tableToolbar.classList.add('hidden');
+            } else if(action === 'incWidth') cell.style.width = (cell.offsetWidth + 20) + 'px';
+            else if(action === 'decWidth') cell.style.width = (Math.max(40, cell.offsetWidth - 20)) + 'px';
+            else if(action === 'incHeight') row.style.height = (row.offsetHeight + 20) + 'px';
+            else if(action === 'decHeight') row.style.height = (Math.max(30, row.offsetHeight - 20)) + 'px';
+            
+            resultText.focus();
+        }
 
-        // Button Actions
+        // --- CALCULATOR ---
+        function toggleCalculator() {
+            calculatorModal.classList.toggle('hidden');
+            if(!calculatorModal.classList.contains('hidden')) {
+                calculatorModal.style.top = '50%'; calculatorModal.style.left = '50%';
+            }
+        }
+        function calcAppend(v) { calcValue = (calcValue === '0' || calcValue === 'Error') ? v : calcValue + v; calcDisplay.innerText = calcValue; }
+        function calcClear() { calcValue = '0'; calcDisplay.innerText = calcValue; }
+        function calcBackspace() { calcValue = calcValue.length > 1 ? calcValue.slice(0,-1) : '0'; calcDisplay.innerText = calcValue; }
+        function calcCalculate() {
+            try { calcValue = eval(calcValue.replace('×','*')).toString(); } catch(e) { calcValue = 'Error'; }
+            calcDisplay.innerText = calcValue;
+        }
+        function insertCalcResult() {
+            if(calcValue !== 'Error') { resultText.focus(); document.execCommand('insertText', false, calcValue); }
+        }
+        // Calculator Drag
+        let isDrag = false, iX, iY;
+        calcHeader.addEventListener('mousedown', e => { isDrag = true; iX = e.clientX - calculatorModal.offsetLeft; iY = e.clientY - calculatorModal.offsetTop; });
+        document.addEventListener('mouseup', () => isDrag = false);
+        document.addEventListener('mousemove', e => { if(isDrag) { 
+            calculatorModal.style.left = (e.clientX - iX) + 'px'; 
+            calculatorModal.style.top = (e.clientY - iY) + 'px'; 
+            calculatorModal.style.transform = 'none';
+        }});
+
+        // --- THEME & EVENTS ---
+        function enableDarkMode() { body.classList.add('dark-mode'); moonIcon.classList.add('hidden'); sunIcon.classList.remove('hidden'); localStorage.setItem('theme', 'dark'); }
+        function disableDarkMode() { body.classList.remove('dark-mode'); moonIcon.classList.remove('hidden'); sunIcon.classList.add('hidden'); localStorage.setItem('theme', 'light'); }
+        themeToggleBtn.addEventListener('click', () => body.classList.contains('dark-mode') ? disableDarkMode() : enableDarkMode());
+
+        // Listeners
         startBtn.addEventListener('click', startRecording);
         stopBtn.addEventListener('click', stopRecording);
-        clearBtn.addEventListener('click', () => {
-            if(resultText.innerText.trim() === "") return;
-            if(confirm("সব লেখা মুছে ফেলতে চান?")) {
-                resultText.innerHTML = "";
-                updateWordCount(); // Update count on clear
-                showToast("মুছে ফেলা হয়েছে");
-            }
-        });
-        copyBtn.addEventListener('click', copyToClipboard);
+        clearBtn.addEventListener('click', () => { if(confirm('সব মুছবেন?')) { resultText.innerHTML = ''; updateWordCount(); } });
+        copyBtn.addEventListener('click', () => { resultText.innerText.trim() && (navigator.clipboard.writeText(resultText.innerText), showToast('কপি হয়েছে')); });
         downloadBtn.addEventListener('click', () => {
-            const text = resultText.innerText;
-            if (!text.trim()) {
-                showToast("সেভ করার জন্য লেখা নেই");
-                return;
-            }
-            const blob = new Blob([text], { type: 'text/plain' });
-            const anchor = document.createElement('a');
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            anchor.download = `speech-doc-${timestamp}.txt`;
-            anchor.href = window.URL.createObjectURL(blob);
-            anchor.click();
-            showToast("ডাউনলোড হচ্ছে...");
+            const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([resultText.innerText], {type: 'text/plain'}));
+            a.download = `speech-doc-${new Date().toISOString().slice(0,10)}.txt`; a.click();
+        });
+        document.addEventListener('keydown', (e) => {
+            if(e.altKey && e.key.toLowerCase() === 's') { e.preventDefault(); if(!isRecording) startRecording(); }
+            if(e.altKey && e.key.toLowerCase() === 'x') { e.preventDefault(); if(isRecording) stopRecording(); }
+        });
+        resultText.addEventListener('paste', e => { e.preventDefault(); document.execCommand('insertText', false, e.clipboardData.getData('text/plain')); updateWordCount(); });
+        resultText.addEventListener('input', updateWordCount);
+        languageSelect.addEventListener('change', () => {
+            resultText.style.direction = languageSelect.value.startsWith('ar') ? 'rtl' : 'ltr';
+            if(isRecording) { stopRecording(); setTimeout(startRecording, 500); }
+        });
+        document.addEventListener('mouseup', () => {
+            const sel = window.getSelection();
+            if(sel.rangeCount > 0 && !sel.isCollapsed && resultText.contains(sel.anchorNode)) {
+                const rect = sel.getRangeAt(0).getBoundingClientRect();
+                translateBtn.classList.remove('hidden');
+                translateBtn.style.top = `${rect.top + window.scrollY - 35}px`;
+                translateBtn.style.left = `${rect.left + window.scrollX + (rect.width/2)}px`;
+                translateBtn.onclick = () => window.open(`https://translate.google.com/?sl=auto&tl=en&text=${encodeURIComponent(sel.toString())}`, '_blank');
+            } else if(!translateBtn.contains(event.target)) translateBtn.classList.add('hidden');
+        });
+        document.addEventListener('click', (e) => {
+            if(!e.target.closest('#colorMenuBtn') && !e.target.closest('#colorDropdown')) colorDropdown.classList.add('hidden');
         });
 
-        // Recognition Events
-        if (recognition) {
-            recognition.onstart = () => {
-                isRecording = true;
-                startBtn.classList.add('hidden');
-                stopBtn.classList.remove('hidden');
-                statusText.innerText = "শুনছি... (Stop: Alt+X)";
-                statusText.className = "text-sm font-bold text-green-600 animate-pulse";
-                stopBtn.classList.add('mic-active');
-                listeningIndicator.classList.remove('hidden');
-                
-                resultText.focus(); 
-            };
-
-            recognition.onend = () => {
-                isRecording = false;
-                startBtn.classList.remove('hidden');
-                stopBtn.classList.add('hidden');
-                statusText.innerText = "মাইক্রোফোন বন্ধ (Start: Alt+S)";
-                statusText.className = "text-sm font-medium text-gray-500";
-                stopBtn.classList.remove('mic-active');
-                listeningIndicator.classList.add('hidden');
-            };
-
-            recognition.onresult = (event) => {
-                let interimTranscript = '';
-                let finalTranscript = '';
-
-                for (let i = event.resultIndex; i < event.results.length; ++i) {
-                    if (event.results[i].isFinal) {
-                        finalTranscript += event.results[i][0].transcript;
-                    } else {
-                        interimTranscript += event.results[i][0].transcript;
-                    }
-                }
-
-                if (finalTranscript) {
-                    insertTextAtCursor(finalTranscript);
-                    statusText.innerText = "শুনছি... (Stop: Alt+X)";
-                    statusText.classList.remove('text-indigo-600', 'font-bold'); // Reset style
-                    updateWordCount(); // Update word count after speech input
-                } else if (interimTranscript) {
-                    // FAST FEEDBACK: Show text in status bar immediately
-                    statusText.innerText = interimTranscript;
-                    statusText.classList.add('text-indigo-600', 'font-bold'); // Highlight active text
-                }
-            };
-            
-            recognition.onerror = (event) => {
-                if (event.error === 'not-allowed') {
-                    showToast("মাইক এর পারমিশন নেই!");
-                }
-                stopRecording();
-            };
-        }
-
-        // Smart Text Insertion for ContentEditable
-        function insertTextAtCursor(text) {
-            resultText.focus();
-            
-            // Check if we need a leading space
-            const selection = window.getSelection();
-            let needsSpace = false;
-            
-            if (selection.rangeCount > 0) {
-                const range = selection.getRangeAt(0);
-                const startOffset = range.startOffset;
-                const container = range.startContainer;
-                
-                // If not at start of line
-                if (startOffset > 0) {
-                    // Check previous char in text node
-                    if (container.nodeType === 3) { // Text node
-                        const prevChar = container.textContent.charAt(startOffset - 1);
-                        if (prevChar && prevChar.trim() !== '') {
-                            needsSpace = true;
-                        }
-                    }
-                } else if (resultText.innerText.length > 0) {
-                    // Start of a node, but editor has content (risky but safe default for dictation)
-                     needsSpace = true; 
-                }
-            }
-
-            if (needsSpace && !text.startsWith(' ')) {
-                text = ' ' + text;
-            }
-
-            // Execute insert command (preserves Undo history)
-            document.execCommand('insertText', false, text);
-            updateWordCount(); // Just in case
-        }
-
-        function showToast(message) {
-            toast.innerText = message;
-            toast.classList.remove('opacity-0');
-            setTimeout(() => {
-                toast.classList.add('opacity-0');
-            }, 3000);
-        }
+        function showToast(msg) { toast.innerText = msg; toast.classList.remove('opacity-0'); setTimeout(() => toast.classList.add('opacity-0'), 3000); }
     </script>
 </body>
 </html>
